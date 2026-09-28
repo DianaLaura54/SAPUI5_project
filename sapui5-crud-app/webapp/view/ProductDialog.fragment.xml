@@ -1,0 +1,56 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout">
+
+    <Dialog
+        id="productDialog"
+        title="{draft>/dialogTitle}"
+        contentWidth="26rem">
+
+        <content>
+            <layout:VerticalLayout width="100%" class="sapUiContentPadding">
+
+                <Label text="{i18n>colName}" labelFor="nameInput" required="true"/>
+                <Input
+                    id="nameInput"
+                    value="{draft>/Name}"
+                    valueState="{draft>/nameState}"
+                    valueStateText="{i18n>nameRequired}"
+                    width="100%"/>
+
+                <Label text="{i18n>colCategory}" labelFor="categoryInput" class="sapUiTinyMarginTop"/>
+                <Select id="categoryInput" selectedKey="{draft>/Category}" width="100%">
+                    <core:Item key="Electronics" text="Electronics"/>
+                    <core:Item key="Furniture" text="Furniture"/>
+                    <core:Item key="Office Supplies" text="Office Supplies"/>
+                    <core:Item key="Other" text="Other"/>
+                </Select>
+
+                <Label text="{i18n>colPrice}" labelFor="priceInput" class="sapUiTinyMarginTop"/>
+                <StepInput
+                    id="priceInput"
+                    value="{draft>/Price}"
+                    min="0"
+                    step="0.5"
+                    width="100%"/>
+
+                <Label text="{i18n>colStock}" labelFor="stockInput" class="sapUiTinyMarginTop"/>
+                <StepInput
+                    id="stockInput"
+                    value="{draft>/Stock}"
+                    min="0"
+                    step="1"
+                    width="100%"/>
+
+            </layout:VerticalLayout>
+        </content>
+
+        <beginButton>
+            <Button text="{i18n>save}" type="Emphasized" press="onDialogSave"/>
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>cancel}" press="onDialogCancel"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

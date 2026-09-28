@@ -1,0 +1,102 @@
+<mvc:View
+    controllerName="sap-ui-app.controller.App"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <Shell id="shell">
+        <App id="app">
+            <Page id="page" title="{i18n>appTitle}" showFooter="false">
+
+                <content>
+                    <f:DynamicPage id="dynamicPage" headerExpanded="true">
+                        <f:title>
+                            <f:DynamicPageTitle>
+                                <f:heading>
+                                    <Title text="{i18n>productListTitle}" level="H2"/>
+                                </f:heading>
+                                <f:snappedContent>
+                                    <Text text="{i18n>productListSubtitle}"/>
+                                </f:snappedContent>
+                            </f:DynamicPageTitle>
+                        </f:title>
+
+                        <f:content>
+                            <Table
+                                id="productTable"
+                                items="{
+                                    path: 'products>/products',
+                                    sorter: { path: 'Name' }
+                                }"
+                                growing="true"
+                                growingThreshold="20"
+                                noDataText="{i18n>noDataText}"
+                                busy="{products>/busy}">
+
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <Title text="{i18n>productListTitle}"/>
+                                        <ToolbarSpacer/>
+                                        <SearchField
+                                            id="searchField"
+                                            width="16rem"
+                                            liveChange="onSearch"
+                                            placeholder="{i18n>searchPlaceholder}"/>
+                                        <ToolbarSpacer width="1rem"/>
+                                        <Button
+                                            id="addButton"
+                                            text="{i18n>addProduct}"
+                                            type="Emphasized"
+                                            icon="sap-icon://add"
+                                            press="onCreate"/>
+                                    </Toolbar>
+                                </headerToolbar>
+
+                                <columns>
+                                    <Column><Text text="{i18n>colName}"/></Column>
+                                    <Column><Text text="{i18n>colCategory}"/></Column>
+                                    <Column hAlign="End"><Text text="{i18n>colPrice}"/></Column>
+                                    <Column hAlign="End"><Text text="{i18n>colStock}"/></Column>
+                                    <Column hAlign="Center"><Text text="{i18n>colActions}"/></Column>
+                                </columns>
+
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <ObjectIdentifier title="{products>Name}"/>
+                                            <Text text="{products>Category}"/>
+                                            <ObjectNumber
+                                                number="{
+                                                    path: 'products>Price',
+                                                    type: 'sap.ui.model.type.Currency',
+                                                    formatOptions: { showMeasure: false, decimals: 2 }
+                                                }"
+                                                unit="USD"/>
+                                            <ObjectStatus
+                                                text="{products>Stock}"
+                                                state="{= ${products>Stock} === 0 ? 'Error' : (${products>Stock} < 15 ? 'Warning' : 'Success') }"/>
+                                            <HBox justifyContent="Center">
+                                                <Button
+                                                    icon="sap-icon://edit"
+                                                    type="Transparent"
+                                                    tooltip="{i18n>editTooltip}"
+                                                    press="onEdit"/>
+                                                <Button
+                                                    icon="sap-icon://delete"
+                                                    type="Transparent"
+                                                    tooltip="{i18n>deleteTooltip}"
+                                                    press="onDelete"/>
+                                            </HBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </f:content>
+                    </f:DynamicPage>
+                </content>
+            </Page>
+        </App>
+    </Shell>
+</mvc:View>
